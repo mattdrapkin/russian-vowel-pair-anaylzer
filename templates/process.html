@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flask Text Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-image: url('https://images5.alphacoders.com/527/thumb-1920-527084.jpg');
+        background-size: cover;
+        background-position: center;
+      }
+
+      form {
+        text-align: center;
+      }
+
+      .scrollable-table-container {
+        max-height: 400px;
+        overflow: auto;
+        margin-top: 20px;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        background-color: white;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+      #results-container {
+        display: flex;
+      }
+
+      .result-container {
+        text-align: start;
+        width: 600px;
+        max-height: 400px;
+        overflow: auto;
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: rgba(255, 255, 255, 0.875);
+    }
+
+      .table-container {
+        display: none;
+      }
+
+      .container {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <h1>Hard-hard vowel pair analyzer</h1>
+        <form action="/process" method="post">
+          <textarea
+            name="user_input"
+            rows="6"
+            cols="50"
+            placeholder="Paste your text here..."
+          ></textarea>
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+
+        <div id="results-container">
+          <form
+            class="result-container"
+            id="non_contig_form"
+            method="post"
+            action="{{ url_for('save_to_html') }}"
+          >
+            <input
+              type="hidden"
+              name="text_input"
+              value="{{ non_contig_result }}"
+            />
+            <h3>Non-contiguous occurances: {{non_contig_occurances}}</h3>
+            <input id="non_contig_btn" type="submit" value="Save to .html" />
+            <pre id="non_contig_text">
+                {{ non_contig_result | safe }}
+            </pre>
+          </form>
+          <div></div>
+
+          <form
+            class="result-container"
+            id="contig_form"
+            method="post"
+            action="{{ url_for('save_to_html') }}"
+          >
+            <input
+              type="hidden"
+              name="text_input"
+              value="{{ contig_result }}"
+            />
+            <h3>Contiguous occurances: {{contig_occurances}}</h3>
+            <input id="contig_btn" type="submit" value="Save to .html" />
+            <pre id="contig_text">
+                {{ contig_result | safe }}
+            </pre>
+          </form>
+        </div>
+        <div
+          class="scrollable-table-container table-container"
+          id="non_contig_table"
+        >
+          <table>
+            <tr>
+              <th>Vowel Pair</th>
+              <th>Frequency</th>
+            </tr>
+            {% for pair, frequency in n_combo_freq.items() %}
+            <tr>
+              <td>{{ pair }}</td>
+              <td>{{ frequency }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+
+        <div
+          class="scrollable-table-container table-container"
+          id="contig_table"
+        >
+          <table>
+            <tr>
+              <th>Vowel Pair</th>
+              <th>Frequency</th>
+            </tr>
+            {% for pair, frequency in combo_freq.items() %}
+            <tr>
+              <td>{{ pair }}</td>
+              <td>{{ frequency }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-evenly">
+        <button onclick="toggleTable('non_contig_table')">
+          See Non-contiguous Vowel Pairs Frequency
+        </button>
+        <button onclick="toggleTable('contig_table')">
+          See Contiguous Vowel Pairs Frequency
+        </button>
+      </div>
+    </div>
+    <script>
+      function toggleTable(tableId) {
+        const tableContainer = document.getElementById(tableId);
+        tableContainer.style.display =
+          tableContainer.style.display === "none" ||
+          tableContainer.style.display === ""
+            ? "block"
+            : "none";
+      }
+
+      $("#non_contig_btn").on("click", function () {
+        const preElement = $("#non_contig_text");
+        let hiddenInput = $("#non_contig_input");
+        hiddenInput.val(preElement.text().trim());
+        $("#non_contig_form").submit();
+      });
+
+      $("#contig_btn").on("submit", function () {
+        const preElement = $("#contig_text");
+        let hiddenInput = $("#contig_input");
+        hiddenInput.val(preElement.text().trim());
+        $("#contig_form").submit();
+      });
+    </script>
+  </body>
+</html>

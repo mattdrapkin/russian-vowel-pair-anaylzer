@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flask Text Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-image: url('https://someboldadventure.com/wp-content/uploads/2020/05/zoom-moscow-museum-red-square.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+      form {
+        text-align: center;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 50%;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      #results-container {
+        display: flex;
+      }
+
+      .result-container {
+        text-align: start;
+        width: 600px;
+        max-height: 400px;
+        overflow: auto;
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: rgba(128, 128, 128, 0.875);
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Hard-hard vowel pair analyzer</h1>
+      <form action="/process" method="post">
+        <textarea
+          name="user_input"
+          rows="6"
+          cols="50"
+          placeholder="Paste your text here..."
+        ></textarea>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
