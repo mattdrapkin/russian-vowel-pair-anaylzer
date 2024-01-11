@@ -6,6 +6,7 @@
     <title>Flask Text Analyzer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
       rel="stylesheet"
@@ -74,8 +75,7 @@
   </head>
   <body>
     <div class="container">
-      <div>
-        <h1 style="padding-top: 20px">Hard-hard vowel pair analyzer</h1>
+      <div style="display: flex; flex-direction: column; align-items: center; margin-top: 50px">
         <form action="/process" method="post">
           <textarea
             name="user_input"
@@ -84,7 +84,7 @@
             placeholder="Paste your text here..."
           ></textarea>
           <br />
-          <button type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
         </form>
 
         <div id="results-container">
@@ -100,7 +100,7 @@
               value="{{ non_contig_result }}"
             />
             <h3>Non-contiguous occurances: {{non_contig_occurances}}</h3>
-            <input id="non_contig_btn" type="submit" value="Save to .html" />
+            <input class="btn btn-primary" id="non_contig_btn" type="submit" value="Save to .html" />
             <pre id="non_contig_text">
                 {{ non_contig_result | safe }}
             </pre>
@@ -119,7 +119,7 @@
               value="{{ contig_result }}"
             />
             <h3>Contiguous occurances: {{contig_occurances}}</h3>
-            <input id="contig_btn" type="submit" value="Save to .html" />
+            <input class="btn btn-primary" id="contig_btn" type="submit" value="Save to .html" />
             <pre id="contig_text">
                 {{ contig_result | safe }}
             </pre>
@@ -162,10 +162,10 @@
         </div>
       </div>
       <div style="display: flex; justify-content: space-evenly;">
-        <button style="margin: 30px 0px;" onclick="toggleTable('non_contig_table')">
+        <button class="btn btn-primary" style="margin: 30px 0px;" onclick="toggleTable('non_contig_table')">
           See Non-contiguous Vowel Pairs Frequency
         </button>
-        <button style="margin: 30px 0px;" onclick="toggleTable('contig_table')">
+        <button class="btn btn-primary" style="margin: 30px 0px;" onclick="toggleTable('contig_table')">
           See Contiguous Vowel Pairs Frequency
         </button>
       </div>
